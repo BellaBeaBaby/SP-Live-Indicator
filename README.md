@@ -22,14 +22,8 @@ SP-Live-Indicator is WebSocket-based and tracks fronting alters and updates an e
    npm install
    ```
 
-3. edit the `.env` file in the root directory of the project and add the following:
-
-   ```env
-    SIMPLY_READ_TOKEN=YOUR_SP_READ_TOKEN
-    INDICATOR_FIELD_NAME=YOUR INDICATOR FIELD NAME
-   ```
-
-4. Replace `YOUR_SP_READ_TOKEN` with the actual token token and `YOUR INDICATOR FIELD NAME` with the name of the custom field you want to track.
+3. edit the `.env` file in the root directory\
+ Replace `YOUR_SP_READ_TOKEN` with the actual token token and `YOUR INDICATOR FIELD NAME` with the name of the custom field you want to track.
 
 ## Usage
 
