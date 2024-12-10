@@ -39,7 +39,11 @@ SP-Live-Indicator is WebSocket-based and tracks fronting alters and updates an e
    npm start
    ```
 
-2. The application will fetch member data and listen for live updates via WebSocket. The list of emojis will be logged in the console whenever there’s a change in the front members' live status. Of course you can replace this with whatever implementation you have planned. I made add some implementations of my own in the future
+2. The application will fetch member data and listen for live updates via WebSocket. 
+The list of emojis will be logged in the console whenever there’s a change in the front members' live status. 
+
+Of course you can replace this with whatever implementation you have planned. 
+I may add some implementations of my own in the future
 
 ## License
 
