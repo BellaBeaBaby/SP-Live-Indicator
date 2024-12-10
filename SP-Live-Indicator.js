@@ -1,15 +1,15 @@
 import WebSocket from 'ws';
 import axios from 'axios';
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 
-// Load environment variables from .env file
-dotenv.config();
+dotenv.config()
 
 // Global variables for tracking IDs and member lists
 let signOffID;
 let systemID;
 let frontList = [];
 let allMembers = [];
+let currentEmojiList = []; // Variable to store the current emoji list
 
 /**
  * Updates the frontList based on the member's state (live or not)
@@ -32,16 +32,15 @@ function updateFront(id, state) {
  */
 function updateEmojiList() {
     const emojiList = frontList.map(id => {
-        // Safely check for member, info, and signOffID
         const member = allMembers.find(member => member.id === id);
-        const emoji = member?.content?.info?.[signOffID]; // Check if signOffID exists in content.info
+        const emoji = member?.content?.info?.[signOffID]; 
         return emoji ? emoji : null;
     }).filter(emoji => emoji !== null); // Exclude null values
 
     // Only log or process the emoji list if it has changed and is not empty
     if (JSON.stringify(emojiList) !== JSON.stringify(currentEmojiList) && emojiList.length > 0) {
         currentEmojiList = emojiList; // Store the updated emoji list
-        console.log(emojiList); // Log the final list of emojis if it has non-empty content
+        console.log(emojiList);
     }
 }
 
@@ -73,46 +72,39 @@ async function getSignOffID() {
 
 /**
  * Retrieves the list of members who have a SignOff field value
- * @returns {Promise<Array>} - Array of valid members
+ * @returns {Promise<Array>} - Array of all members (no filtering needed)
  */
 async function getMembers() {
-    const validMembers = [];
     const response = await axios.get(`https://api.apparyllis.com/v1/members/${systemID}`, {
         headers: {
             'authorization': process.env.SIMPLY_READ_TOKEN
         }
     });
 
-    const members = response.data;
-    for (const member of members) {
-        if (member.content.info[signOffID]) {
-            validMembers.push(member);
-        }
-    }
-    return validMembers;
+    return response.data; // Return all members, filtering done in updateEmojiList
 }
 
 /**
- * Initializes system by fetching and setting required IDs and member data
+ * Initializes system by fetching and setting required IDs, member data, and front list
  */
 async function initializeSystem() {
     systemID = await getSystemID();
     signOffID = await getSignOffID();
     allMembers = await getMembers();
+
+    // Fetch initial front members
+    const frontResponse = await axios.get('https://api.apparyllis.com/v1/fronters/', {
+        headers: {
+            'authorization': process.env.SIMPLY_READ_TOKEN
+        }
+    });
+
+    frontList = frontResponse.data.map(item => item.content.member); // Update frontList with current members
+    updateEmojiList(); // Run emoji list update
 }
 
 // Initialize system
 initializeSystem();
-
-// Fetch current front members
-axios.get('https://api.apparyllis.com/v1/fronters/', {
-    headers: {
-        'authorization': process.env.SIMPLY_READ_TOKEN
-    }
-}).then(response => {
-    frontList = response.data.map(item => item.content.member); // Update frontList with current members
-    updateEmojiList()
-});
 
 // Create WebSocket connection to server
 const socket = new WebSocket('wss://api.apparyllis.com/v1/socket');
