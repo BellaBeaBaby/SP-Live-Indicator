@@ -23,21 +23,26 @@ SP-Live-Indicator is WebSocket-based and tracks fronting alters and updates an e
    ```
 
 3. Edit the `.env` file in the root directory\
- Replace `YOUR_SP_READ_TOKEN` with the actual token token and `YOUR INDICATOR FIELD NAME` with the name of the custom field you want to track.
+Replace `YOUR_SP_READ_TOKEN` with the actual token token and\
+`YOUR INDICATOR FIELD NAME` with the name of the custom field you want to track.
 
 ## Usage
 
-1. Start the application:
+1. Create your project
+2. Import IndicatorTracker
 
-   ```bash
-   npm start
+   ```
+   import IndicatorTracker from './SP-Live-Indicator.js';
+   const tracker = new IndicatorTracker();
    ```
 
-2. The application will fetch member data and listen for live updates via WebSocket. 
-3. The list of emojis will be logged in the console whenever there’s a change in the front members' live status. 
+3. Re-Assign the indicatorListChange function
 
-Of course you can replace this with whatever implementation you have planned.\
-I may add some implementations of my own in the future
+   ```
+   tracker.indicatorListChange = (newList) => {Your_Function(newlist)}
+   ```
+   
+5. The list of current indicators will be input into your function whenever there’s a change in it
 
 ## License
 
