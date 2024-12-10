@@ -1,0 +1,19 @@
+{
+  "type": "module",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "ws": "^8.18.0"
+  },
+  "name": "final",
+  "version": "1.0.0",
+  "main": "SP-Live-Indicator.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Carbxi",
+  "license": "ISC",
+  "description": ""
+}
