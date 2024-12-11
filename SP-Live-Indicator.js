@@ -103,7 +103,7 @@ class IndicatorTracker {
         // Only log or process the emoji list if it has changed and is not empty
         if (JSON.stringify(newEmojiList) !== JSON.stringify(this.currentEmojiList) && newEmojiList.length > 0) {
             this.currentEmojiList = newEmojiList; // Store the updated emoji list
-            this.indicatorListChange(newEmojiList);
+            this.indicatorListUpdate(newEmojiList);
         }
     }
     
